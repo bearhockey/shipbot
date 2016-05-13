@@ -7,9 +7,9 @@ from PIL import Image, ImageFont, ImageDraw
 
 
 def make_meme(image_url, file_name, meme_text):
-    file = cStringIO.StringIO(urllib2.urlopen(image_url).read())
+    image_file = cStringIO.StringIO(urllib2.urlopen(image_url).read())
     try:
-        img = Image.open(file)
+        img = Image.open(image_file)
     except Exception as e:
         print "Fuck it didn't work"
         return "WHOOPS"
@@ -22,15 +22,28 @@ def make_meme(image_url, file_name, meme_text):
         img.paste(img.seek(1))
 
     print "Image is animted GIF: {0}".format(isanimated)
-    new_img = img.resize((300, 300))
+    width = 640
+    height = 480
+    text_size = int(height * 0.2)
 
-    font = ImageFont.truetype("impact.ttf", 64)
+    new_img = img.resize((width, height))
+
+    font = ImageFont.truetype("impact.ttf", text_size)
     draw = ImageDraw.Draw(new_img)
-    text_length = len(meme_text)
-    draw.text((300 - (text_length * 34), 224), meme_text, font=font, fill=(0, 0, 0, 255))
-    draw.text((296 - (text_length * 34), 220), meme_text, font=font, fill=(255, 255, 255, 255))
+    text_length = font.getsize(meme_text)[0]
+    print "Text width is: {0}".format(text_length)
+    # text_length = len(meme_text)
 
+    x_position = width / 2 - text_length / 2
+    y_position = height - text_size - 8
+    # border
+    draw.text((x_position - 2, y_position - 2), meme_text, font=font, fill=(0, 0, 0, 255))
+    draw.text((x_position + 2, y_position - 2), meme_text, font=font, fill=(0, 0, 0, 255))
+    draw.text((x_position - 2, y_position + 2), meme_text, font=font, fill=(0, 0, 0, 255))
+    draw.text((x_position + 4, y_position + 4), meme_text, font=font, fill=(0, 0, 0, 255))
+
+    draw.text((x_position, y_position), meme_text, font=font, fill=(255, 255, 255, 255))
     new_img = new_img.convert('P')
     new_img.save(file_name, optimize=True)
 
-    return file
+    return image_file
