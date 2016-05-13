@@ -36,7 +36,7 @@ class ShipBot(object):
                 print response
                 if "http" in response:
                     memester.make_meme(response, self.meme_path, "SHIP IT")
-                    response = lighthouse.upload_image_to_imgur(self.meme_path)
+                    # response = lighthouse.upload_image_to_imgur(self.meme_path)
 
             else:
                 response = "You said: {0}".format(in_string)

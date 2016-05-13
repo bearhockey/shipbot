@@ -19,7 +19,7 @@ def make_meme(image_url, file_name, meme_text):
         isanimated = False
     else:
         isanimated = True
-        img.paste(img.seek(1))
+        img.paste(img.seek(0))
 
     print "Image is animted GIF: {0}".format(isanimated)
     width = 640
