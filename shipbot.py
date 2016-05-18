@@ -12,6 +12,7 @@ from random import choice
 
 import lighthouse
 import memester
+import wikiwiki
 
 
 class ShipBot(object):
@@ -37,7 +38,9 @@ class ShipBot(object):
                 if "http" in response:
                     memester.make_meme(response, self.meme_path, "SHIP IT")
                     # response = lighthouse.upload_image_to_imgur(self.meme_path)
-
+            elif "burger" in lower_string:
+                noun, url = wikiwiki.get_random_noun()
+                response = "'{0}' makes the best hamburgers!".format(noun)
             else:
                 response = "You said: {0}".format(in_string)
         else:
