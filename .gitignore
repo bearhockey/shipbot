@@ -4,3 +4,4 @@ yaml
 *.yaml
 *.pyc
 images/
+settings.py

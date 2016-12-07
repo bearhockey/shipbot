@@ -25,15 +25,21 @@ def get_image_imgur(search, index=None, nsfw=False):
                 index = 0
             image = result[index]
             if image.is_album:
-                print "Got album, skipping"
-                index += 1
+                print "Got album, getting ID from cover: {0}".format(image.cover)
+                image = imgur_client.get_image(image.cover)
+                got_image = True
             else:
                 got_image = True
-    if image.nsfw and nsfw is False:
-        response = "Image is NSFW"
-    else:
+            if image.nsfw and nsfw is False:
+                print "Image is NSFW"
+                got_image = False
+                index += 1
         response = image.link
-    return response
+        print "Fun facts: {0} - {1}".format(image.title, image.description)
+        return response, image.title, image.description
+    else:
+        print "Length of result was {0}?!?".format(len(result))
+        return "A bad thing happened"
 
 
 def upload_image_to_imgur(file_path):
