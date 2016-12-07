@@ -5,10 +5,8 @@ from imgurpython import ImgurClient
 from random import randint
 
 
-def get_image_imgur(search, index=None, nsfw=False):
-    client_id = "d423e3f49823d02"
-    client_secret = "6d3052e94492d230cb7ef7117a781c52aafbaae4"
-    imgur_client = ImgurClient(client_id, client_secret)
+def get_image_imgur(client, search, index=None, nsfw=False):
+    imgur_client = client
     if search.lower() == "random":
         result = imgur_client.gallery_random()
     else:

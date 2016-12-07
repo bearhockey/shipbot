@@ -31,12 +31,12 @@ class ShipBot(object):
             lower_string = in_string.lower()
 
             if "ship it" in lower_string:
-                response, title, desc = lighthouse.get_image_imgur(choice(self.ship_names))
+                response, title, desc = lighthouse.get_image_imgur(self.imgur_client, choice(self.ship_names))
                 if "http" in response:
                     memester.make_meme(response, self.meme_path, "SHIP IT")
                     # response = lighthouse.upload_image_to_imgur(self.meme_path)
             elif "dank" in lower_string:
-                response, title, desc = lighthouse.get_image_imgur("random")
+                response, title, desc = lighthouse.get_image_imgur(self.imgur_client, "random")
                 # if title:
                 #    text = title.split()[0]
                 # elif desc:
